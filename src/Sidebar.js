@@ -17,39 +17,44 @@ const reactPage = "https://br.udacity.com/course/react-nanodegree--nd019"
 
 class SideBar extends Component {
 
+    state = {
+        active: "home"
+    }
+
     handleClick = (id) => {
-        console.log("Menu click", id)
+        this.setState({ active: id })
     }
 
     render() {
+        const { active } = this.state
         return (
             <List>
                 <MenuItem
                     id="home"
                     icon={<HomeIcon />}
                     text="Home"
-                    isActive={false}
+                    isActive={active === "home"}
                     onClick={this.handleClick}
                 />
                 <MenuItem
                     id="reading"
                     icon={<CurrentlyReadingIcon />}
                     text="Currently Reading"
-                    isActive={false}
+                    isActive={active === "reading"}
                     onClick={this.handleClick}
                 />
                 <MenuItem
                     id="want"
                     icon={<WantToReadIcon />}
                     text="Want to Read"
-                    isActive={false}
+                    isActive={active === "want"}
                     onClick={this.handleClick}
                 />
                 <MenuItem
                     id="read"
                     icon={<ReadIcon />}
                     text="Read"
-                    isActive={false}
+                    isActive={active === "read"}
                     onClick={this.handleClick}
                 />
                 <Divider />

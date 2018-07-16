@@ -9,25 +9,30 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 const styles = theme => ({
     active: {
-        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.dark,
+        fontWeight: '600'
     }
 })
 
 const MenuItem = ({ classes, id, icon, text, isActive, onClick }) => (
     <ListItem
         button
-        className={classNames(isActive && classes.active)}
         onClick={(e) => {
             e.stopPropagation()
             onClick(id)
         }}
     >
         {icon && (
-            <ListItemIcon>
+            <ListItemIcon className={classNames(isActive && classes.active)}>
                 {icon}
             </ListItemIcon>
         )}
-        <ListItemText primary={text} />
+        <ListItemText
+            primary={text}
+            classes={{
+                primary: classNames(isActive && classes.active)
+            }}
+        />
     </ListItem>
 )
 
