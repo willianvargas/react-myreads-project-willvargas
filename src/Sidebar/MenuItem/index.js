@@ -14,7 +14,7 @@ const styles = theme => ({
     }
 })
 
-const MenuItem = ({ classes, id, icon, text, isActive, onClick }) => (
+const MenuItem = ({ classes, id, icon, text, active, onClick }) => (
     <ListItem
         button
         onClick={(e) => {
@@ -23,14 +23,14 @@ const MenuItem = ({ classes, id, icon, text, isActive, onClick }) => (
         }}
     >
         {icon && (
-            <ListItemIcon className={classNames(isActive && classes.active)}>
+            <ListItemIcon className={classNames(active && classes.active)}>
                 {icon}
             </ListItemIcon>
         )}
         <ListItemText
             primary={text}
             classes={{
-                primary: classNames(isActive && classes.active)
+                primary: classNames(active && classes.active)
             }}
         />
     </ListItem>
@@ -39,7 +39,7 @@ const MenuItem = ({ classes, id, icon, text, isActive, onClick }) => (
 MenuItem.propTypes = {
     classes: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
-    isActive: PropTypes.bool.isRequired,
+    active: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
     icon: PropTypes.element

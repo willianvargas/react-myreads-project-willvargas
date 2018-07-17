@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 
 import { withStyles } from '@material-ui/core/styles'
-import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
 import Grid from '@material-ui/core/Grid'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -12,10 +10,10 @@ import IconButton from '@material-ui/core/IconButton'
 import Hidden from '@material-ui/core/Hidden'
 import MenuIcon from '@material-ui/icons/Menu'
 
-import SideBar from './Sidebar'
+import SidebarDrawer from '../SidebarDrawer'
+import SidebarDrawerMobile from '../SidebarDrawerMobile'
+import SideBar from '../Sidebar'
 
-
-const drawerWidth = 240
 
 const styles = theme => ({
     root: {
@@ -42,27 +40,6 @@ const styles = theme => ({
     navGrid: {
         overflow: 'hidden',
         userSelect: 'none'
-    },
-    drawerPaper: {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: drawerWidth,
-        overflow: 'hidden',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen
-        })
-    },
-    drawerPaperMobile: {
-        width: drawerWidth
-    },
-    drawerPaperClose: {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen
-        }),
-        width: 0
     },
     toolbar: {
         display: 'flex',
@@ -134,32 +111,16 @@ class MainLayout extends Component {
                         </Grid>
                     </Toolbar>
                 </AppBar>
-                <Hidden mdUp>
-                    <Drawer
-                        variant="temporary"
-                        open={mobileOpen}
-                        onClose={this.handleDrawerMobileClose}
-                        classes={{
-                            paper: classes.drawerPaperMobile
-                        }}
-                        ModalProps={{
-                            keepMounted: true // Better open performance on mobile.
-                        }}
-                    >
-                        <SideBar />
-                    </Drawer>
-                </Hidden>
                 <Hidden smDown implementation="css">
-                    <Drawer
-                        variant="permanent"
-                        classes={{
-                            paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose)
-                        }}
-                        open={open}
-                    >
+                    <SidebarDrawer open={open}>
                         <div className={classes.toolbar} />
                         <SideBar />
-                    </Drawer>
+                    </SidebarDrawer>
+                </Hidden>
+                <Hidden mdUp>
+                    <SidebarDrawerMobile open={mobileOpen} onClose={this.handleDrawerMobileClose}>
+                        <SideBar />
+                    </SidebarDrawerMobile>
                 </Hidden>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
