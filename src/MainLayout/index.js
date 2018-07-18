@@ -11,7 +11,6 @@ import Hidden from '@material-ui/core/Hidden'
 import MenuIcon from '@material-ui/icons/Menu'
 
 import SidebarDrawer from '../SidebarDrawer'
-import SidebarDrawerMobile from '../SidebarDrawerMobile'
 import SideBar from '../Sidebar'
 
 
@@ -41,13 +40,6 @@ const styles = theme => ({
         overflow: 'hidden',
         userSelect: 'none'
     },
-    toolbar: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar
-    },
     content: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
@@ -56,6 +48,7 @@ const styles = theme => ({
 })
 
 class MainLayout extends Component {
+
     state = {
         open: true,
         mobileOpen: false
@@ -113,14 +106,13 @@ class MainLayout extends Component {
                 </AppBar>
                 <Hidden smDown implementation="css">
                     <SidebarDrawer open={open}>
-                        <div className={classes.toolbar} />
                         <SideBar />
                     </SidebarDrawer>
                 </Hidden>
                 <Hidden mdUp>
-                    <SidebarDrawerMobile open={mobileOpen} onClose={this.handleDrawerMobileClose}>
+                    <SidebarDrawer open={mobileOpen} mobile onClose={this.handleDrawerMobileClose}>
                         <SideBar />
-                    </SidebarDrawerMobile>
+                    </SidebarDrawer>
                 </Hidden>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
@@ -134,7 +126,7 @@ class MainLayout extends Component {
 MainLayout.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
-    children: PropTypes.element
+    children: PropTypes.element.isRequired
 }
 
 export default withStyles(styles, { withTheme: true })(MainLayout)

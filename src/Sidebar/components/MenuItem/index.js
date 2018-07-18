@@ -7,10 +7,13 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 
+
 const styles = theme => ({
-    active: {
-        color: theme.palette.primary.dark,
-        fontWeight: '600'
+    iconActive: {
+        color: theme.palette.primary.dark
+    },
+    textActive: {
+        color: theme.palette.primary.dark
     }
 })
 
@@ -23,14 +26,18 @@ const MenuItem = ({ classes, id, icon, text, active, onClick }) => (
         }}
     >
         {icon && (
-            <ListItemIcon className={classNames(active && classes.active)}>
+            <ListItemIcon
+                classes={{
+                    root: classNames(active && classes.iconActive)
+                }}
+            >
                 {icon}
             </ListItemIcon>
         )}
         <ListItemText
             primary={text}
             classes={{
-                primary: classNames(active && classes.active)
+                primary: classNames(active && classes.textActive)
             }}
         />
     </ListItem>
@@ -39,10 +46,15 @@ const MenuItem = ({ classes, id, icon, text, active, onClick }) => (
 MenuItem.propTypes = {
     classes: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
-    active: PropTypes.bool.isRequired,
     onClick: PropTypes.func.isRequired,
     text: PropTypes.string.isRequired,
+    active: PropTypes.bool,
     icon: PropTypes.element
+}
+
+MenuItem.defaultProps = {
+    active: false,
+    icon: null
 }
 
 export default withStyles(styles, { withTheme: true })(MenuItem)

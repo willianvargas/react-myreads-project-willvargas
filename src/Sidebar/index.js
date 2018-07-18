@@ -8,7 +8,7 @@ import {
     LibraryBooks as ReadIcon
 } from '@material-ui/icons'
 
-import MenuItem from './MenuItem'
+import MenuItem from './components/MenuItem'
 
 const itens = [
     {

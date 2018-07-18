@@ -8,9 +8,11 @@ import Drawer from '@material-ui/core/Drawer'
 
 const styles = theme => ({
     root: {
+        width: 240,
+    },
+    rootNotMobile: {
         position: 'relative',
         whiteSpace: 'nowrap',
-        width: 240,
         overflow: 'hidden',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
@@ -25,19 +27,40 @@ const styles = theme => ({
         }),
         width: 0
     },
+    toolbarOffset: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 8px',
+        ...theme.mixins.toolbar
+    }
 })
 
-const SidebarDrawer = ({ classes, open, children, onClose = () => {} }) => {
+const SidebarDrawer = ({ classes, open, children, mobile, onClose }) => {
     return (
         <Drawer
-            variant="permanent"
+            variant={mobile ? "temporary" : "permanent"}
             open={open}
-            onClose={onClose}
+            onClose={() => {
+                if (onClose) {
+                    onClose()
+                }
+            }}
             classes={{
-                paper: classNames(classes.root, !open && classes.closed)
+                paper: classNames(
+                    classes.root,
+                    !mobile && classes.rootNotMobile,
+                    !open && !mobile && classes.closed
+                )
+            }}
+            ModalProps={{
+                keepMounted: mobile
             }}
         >
-            {children}
+            {!mobile && (
+                <div className={classes.toolbarOffset} />
+            )}
+            {children && children}
         </Drawer>
     )
 }
@@ -46,7 +69,14 @@ SidebarDrawer.propTypes = {
     classes: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
     children: PropTypes.element,
+    mobile: PropTypes.bool,
     onClose: PropTypes.func
+}
+
+SidebarDrawer.defaultProps = {
+    children: null,
+    mobile: false,
+    onClose: null
 }
 
 export default withStyles(styles, { withTheme: true })(SidebarDrawer)
