@@ -2,17 +2,62 @@ import React, { Component } from 'react'
 
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
 
 import MuiTheme from '../styles/MuiTheme'
 import MainLayout from '../MainLayout'
 import LibraryAddButton from '../LibraryAddButton'
+import Book from '../Book'
+
+import { getAll } from '../BooksAPI'
 
 
 class HomePage extends Component {
 
-    componentDidMount() {
+    state = {
+        books: [
+            {
+                title: "Hey, ho, let's go",
+                cover: "/cover.png",
+                authors: "Me and myself"
+            },
+            {
+                title: "Hey, ho, let's go",
+                cover: "/cover.png",
+                authors: "Me and myself"
+            },
+            {
+                title: "Hey, ho, let's go",
+                cover: "/cover.png",
+                authors: "Me and myself"
+            },
+            {
+                title: "Hey, ho, let's go",
+                cover: "/cover.png",
+                authors: "Me and myself"
+            },
+            {
+                title: "Hey, ho, let's go",
+                cover: "/cover.png",
+                authors: "Me and myself"
+            },
+            {
+                title: "Hey, ho, let's go",
+                cover: "/cover.png",
+                authors: "Me and myself"
+            },
+        ],
+        shelfs: {
+            reading: [],
+            want: [],
+            read: []
+        }
+    }
 
+    componentWillMount() {
+        getAll().then((books) => {
+            console.log(books)
+        })
     }
 
     onClickLibraryAdd = (e) => {
@@ -21,13 +66,29 @@ class HomePage extends Component {
     }
 
     render() {
+        const { books } = this.state
         return (
             <MuiThemeProvider theme={MuiTheme}>
                 <CssBaseline />
                 <MainLayout>
-                    <Typography>
-                        Test
-                    </Typography>
+                    <Grid
+                        container
+                        spacing={24}
+                        alignItems="center"
+                    >
+                        {books.map((book, index) => {
+                            return (
+                                <Grid
+                                    key={index}
+                                    item
+                                >
+                                    <Book
+                                        {...book}
+                                    />
+                                </Grid>
+                            )
+                        })}
+                    </Grid>
                 </MainLayout>
                 <LibraryAddButton onClick={this.onClickLibraryAdd} />
             </MuiThemeProvider>

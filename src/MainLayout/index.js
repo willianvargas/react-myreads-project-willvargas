@@ -44,6 +44,13 @@ const styles = theme => ({
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
         padding: theme.spacing.unit * 3
+    },
+    toolbarOffset: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: '0 8px',
+        ...theme.mixins.toolbar
     }
 })
 
@@ -115,7 +122,7 @@ class MainLayout extends Component {
                     </SidebarDrawer>
                 </Hidden>
                 <main className={classes.content}>
-                    <div className={classes.toolbar} />
+                    <div className={classes.toolbarOffset} />
                     {children}
                 </main>
             </div>
