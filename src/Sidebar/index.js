@@ -17,12 +17,12 @@ const itens = [
         icon: <HomeIcon />
     },
     {
-        id: "reading",
+        id: "currentlyReading",
         text: "Currently Reading",
         icon: <CurrentlyReadingIcon />
     },
     {
-        id: "want",
+        id: "wantToRead",
         text: "Want to Read",
         icon: <WantToReadIcon />
     },

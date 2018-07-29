@@ -30,7 +30,7 @@
     "quotes": 0,
     "semi": ["error","never"],
     "space-before-blocks" : [1, "always"],
-    "react/forbid-prop-types": ["error", { "forbid": ["any", "array"], "checkContextTypes": true, "checkChildContextTypes": true }],
+    "react/forbid-prop-types": ["error", { "forbid": ["any"], "checkContextTypes": true, "checkChildContextTypes": true }],
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
     "react/jsx-indent": ["error", 4],
     "react/jsx-indent-props": ["error", 4]

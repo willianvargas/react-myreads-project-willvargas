@@ -2,61 +2,29 @@ import React, { Component } from 'react'
 
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import Grid from '@material-ui/core/Grid'
 
 import MuiTheme from '../styles/MuiTheme'
-import MainLayout from '../MainLayout'
-import LibraryAddButton from '../LibraryAddButton'
-import Book from '../Book'
+
+import shelves from '../constants/shelves'
 
 import { getAll } from '../BooksAPI'
+
+import MainLayout from '../MainLayout'
+import LoadingState from '../LoadingState'
+import LibraryAddButton from '../LibraryAddButton'
+import Shelf from '../Shelf'
 
 
 class HomePage extends Component {
 
     state = {
-        books: [
-            {
-                title: "Hey, ho, let's go",
-                cover: "/cover.png",
-                authors: "Me and myself"
-            },
-            {
-                title: "Hey, ho, let's go",
-                cover: "/cover.png",
-                authors: "Me and myself"
-            },
-            {
-                title: "Hey, ho, let's go",
-                cover: "/cover.png",
-                authors: "Me and myself"
-            },
-            {
-                title: "Hey, ho, let's go",
-                cover: "/cover.png",
-                authors: "Me and myself"
-            },
-            {
-                title: "Hey, ho, let's go",
-                cover: "/cover.png",
-                authors: "Me and myself"
-            },
-            {
-                title: "Hey, ho, let's go",
-                cover: "/cover.png",
-                authors: "Me and myself"
-            },
-        ],
-        shelfs: {
-            reading: [],
-            want: [],
-            read: []
-        }
+        books: {}
     }
 
     componentWillMount() {
         getAll().then((books) => {
             console.log(books)
+            this.mapBooksFromApi(books)
         })
     }
 
@@ -65,30 +33,39 @@ class HomePage extends Component {
         console.log("Click add")
     }
 
+    mapBooksFromApi(apiBooks) {
+        let { books } = {}
+        apiBooks.forEach(book => {
+            const { id } = book
+            books = {
+                ...books,
+                [id]: book
+            }
+        })
+        this.setState({ books })
+    }
+
     render() {
         const { books } = this.state
+        const bookList = Object.keys(books).map(key => books[key])
         return (
             <MuiThemeProvider theme={MuiTheme}>
                 <CssBaseline />
                 <MainLayout>
-                    <Grid
-                        container
-                        spacing={24}
-                        alignItems="center"
-                    >
-                        {books.map((book, index) => {
+                    {bookList.length > 0 ? (
+                        shelves.map(shelf => {
+                        const shelfBooks = bookList.filter(book => book.shelf === shelf.id)
                             return (
-                                <Grid
-                                    key={index}
-                                    item
-                                >
-                                    <Book
-                                        {...book}
-                                    />
-                                </Grid>
+                                <Shelf
+                                    key={shelf.id}
+                                    {...shelf}
+                                    books={shelfBooks}
+                                />
                             )
-                        })}
-                    </Grid>
+                        })
+                    ) : (
+                        <LoadingState />
+                    )}
                 </MainLayout>
                 <LibraryAddButton onClick={this.onClickLibraryAdd} />
             </MuiThemeProvider>

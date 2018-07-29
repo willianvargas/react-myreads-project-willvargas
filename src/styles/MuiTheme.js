@@ -14,6 +14,9 @@ export default createMuiTheme({
             main: '#C37326',
             dark: '#8E4B0B',
             contrastText: '#fff'
+        },
+        action: {
+            selected: 'rgba(26, 105, 120, 0.25)'
         }
     },
     overrides: {

@@ -41,9 +41,12 @@ const styles = theme => ({
         userSelect: 'none'
     },
     content: {
+        position: 'relative',
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
-        padding: theme.spacing.unit * 3
+        padding: theme.spacing.unit * 3,
+        height: '100vh',
+        overflowX: 'auto'
     },
     toolbarOffset: {
         display: 'flex',
@@ -133,7 +136,7 @@ class MainLayout extends Component {
 MainLayout.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
-    children: PropTypes.element.isRequired
+    children: PropTypes.node.isRequired
 }
 
 export default withStyles(styles, { withTheme: true })(MainLayout)
