@@ -28,7 +28,7 @@ const Shelf = ({ classes, Icon, title, books }) => (
                 {title}
             </Typography>
         </div>
-        <Grid container spacing={24} alignItems="center">
+        <Grid container spacing={24} alignItems="stretch">
             {books.map(
                 book => {
                     return (

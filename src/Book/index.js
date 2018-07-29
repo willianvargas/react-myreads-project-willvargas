@@ -12,7 +12,8 @@ import BookMenu from "../BookMenu"
 const styles = theme => ({
     root: {
         width: 200,
-        height: 280,
+        height: '100%',
+        minHeight: 280,
         padding: theme.spacing.unit
     },
     thumbnailContent: {
@@ -44,10 +45,14 @@ const styles = theme => ({
         right: theme.spacing.unit * -1
     },
     title: {
-        marginTop: theme.spacing.unit * 1,
-        marginBottom: theme.spacing.unit * 0.5,
-        lineHeight: '1.3em',
+        marginTop: theme.spacing.unit * 1.5,
+        marginBottom: theme.spacing.unit,
+        lineHeight: '1.1em',
         maxWidth: 'calc(100% - 32px)'
+    },
+    authors: {
+        maxWidth: 'calc(100% - 32px)',
+        lineHeight: '1.2em'
     }
 })
 
@@ -84,7 +89,7 @@ class Book extends Component {
                         {title}
                     </Typography>
                     {authors && authors.length > 0 && (
-                        <Typography variant="caption">
+                        <Typography className={classes.authors} variant="caption">
                             {authors.join(', ')}
                         </Typography>
                     )}

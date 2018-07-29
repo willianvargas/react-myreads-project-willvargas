@@ -48,12 +48,14 @@ class BookMenu extends Component {
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}
-                    // PopoverClasses={{
-                    //     anchorOrigin: {
-                    //         vertical: 'top',
-                    //         horizontal: 'right'
-                    //     }
-                    // }}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
                 >
                     {options.map(option => (
                         <MenuItem
