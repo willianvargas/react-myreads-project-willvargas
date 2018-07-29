@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
 import ListItem from '@material-ui/core/ListItem'
@@ -57,4 +57,6 @@ MenuItem.defaultProps = {
     icon: null
 }
 
-export default withStyles(styles, { withTheme: true })(MenuItem)
+export default withRouter(
+    withStyles(styles, { withTheme: true })(MenuItem)
+)

@@ -58,51 +58,48 @@ const styles = theme => ({
 
 const defaultThumbnail = 'https://books.google.com.br/googlebooks/images/no_cover_thumb.gif'
 
-class Book extends Component {
 
-    render() {
-        const { classes, id, title, authors, shelf, imageLinks: { thumbnail },
-            onBookChangeShelf } = this.props
-        const thumbnailStyle = {
-            backgroundImage: `url(${thumbnail || defaultThumbnail})`
-        }
-        return (
-            <Paper className={classes.root}>
-                <div className={classes.thumbnailContent}>
-                    <div
-                        className={classNames(classes.thumbnail, classes.thumbnailBlur)}
-                        style={thumbnailStyle}
-                    />
-                    <div
-                        className={classes.thumbnail}
-                        style={thumbnailStyle}
-                    />
-                </div>
-                <div className={classes.description}>
-                    <div className={classes.menu}>
-                        <BookMenu
-                            shelf={shelf}
-                            onChangeShelf={(shelf) => {
-                                onBookChangeShelf(id, shelf)
-                            }}
-                        />
-                    </div>
-                    <Typography
-                        className={classes.title}
-                        variant="body2"
-                        component="p"
-                    >
-                        {title}
-                    </Typography>
-                    {authors && authors.length > 0 && (
-                        <Typography className={classes.authors} variant="caption">
-                            {authors.join(', ')}
-                        </Typography>
-                    )}
-                </div>
-            </Paper>
-        )
+const Book = ({ classes, id, title, authors, shelf, imageLinks: { thumbnail },
+                  onBookChangeShelf }) => {
+    const thumbnailStyle = {
+        backgroundImage: `url(${thumbnail || defaultThumbnail})`
     }
+    return (
+        <Paper className={classes.root}>
+            <div className={classes.thumbnailContent}>
+                <div
+                    className={classNames(classes.thumbnail, classes.thumbnailBlur)}
+                    style={thumbnailStyle}
+                />
+                <div
+                    className={classes.thumbnail}
+                    style={thumbnailStyle}
+                />
+            </div>
+            <div className={classes.description}>
+                <div className={classes.menu}>
+                    <BookMenu
+                        shelf={shelf}
+                        onChangeShelf={(shelf) => {
+                            onBookChangeShelf(id, shelf)
+                        }}
+                    />
+                </div>
+                <Typography
+                    className={classes.title}
+                    variant="body2"
+                    component="p"
+                >
+                    {title}
+                </Typography>
+                {authors && authors.length > 0 && (
+                    <Typography className={classes.authors} variant="caption">
+                        {authors.join(', ')}
+                    </Typography>
+                )}
+            </div>
+        </Paper>
+    )
 }
 
 Book.propTypes = {
