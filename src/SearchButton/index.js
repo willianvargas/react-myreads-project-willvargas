@@ -10,7 +10,7 @@ import Search from '@material-ui/icons/Search'
 
 const styles = theme => ({
     tooltip: {
-        marginRight: theme.spacing.unit
+        marginRight: theme.spacing.unit * 0.5
     },
     button: {
         position: 'absolute',

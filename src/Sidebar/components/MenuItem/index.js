@@ -23,7 +23,7 @@ const styles = theme => ({
 })
 
 const MenuItem = ({ classes, link, icon, text, active }) => (
-    <Link to={link} class={classes.root}>
+    <Link to={link} className={classes.root}>
         <ListItem button>
             {icon && (
                 <ListItemIcon

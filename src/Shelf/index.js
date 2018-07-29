@@ -20,7 +20,7 @@ const styles = theme => ({
     }
 })
 
-const Shelf = ({ classes, Icon, title, books }) => (
+const Shelf = ({ classes, Icon, title, books, onBookChangeShelf }) => (
     <Grid className={classes.root}>
         <div className={classes.title}>
             {Icon}
@@ -35,6 +35,7 @@ const Shelf = ({ classes, Icon, title, books }) => (
                         <Grid key={book.id} item>
                             <Book
                                 {...book}
+                                onBookChangeShelf={onBookChangeShelf}
                             />
                         </Grid>
                     )
@@ -48,7 +49,8 @@ Shelf.propTypes = {
     classes: PropTypes.object.isRequired,
     Icon: PropTypes.element.isRequired,
     title: PropTypes.string.isRequired,
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onBookChangeShelf: PropTypes.func.isRequired
 }
 
 export default withStyles(styles, { withTheme: true })(Shelf)

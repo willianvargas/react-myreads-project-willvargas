@@ -61,7 +61,8 @@ const defaultThumbnail = 'https://books.google.com.br/googlebooks/images/no_cove
 class Book extends Component {
 
     render() {
-        const { classes, title, authors, shelf, imageLinks: { thumbnail } } = this.props
+        const { classes, id, title, authors, shelf, imageLinks: { thumbnail },
+            onBookChangeShelf } = this.props
         const thumbnailStyle = {
             backgroundImage: `url(${thumbnail || defaultThumbnail})`
         }
@@ -79,7 +80,12 @@ class Book extends Component {
                 </div>
                 <div className={classes.description}>
                     <div className={classes.menu}>
-                        <BookMenu shelf={shelf} />
+                        <BookMenu
+                            shelf={shelf}
+                            onChangeShelf={(shelf) => {
+                                onBookChangeShelf(id, shelf)
+                            }}
+                        />
                     </div>
                     <Typography
                         className={classes.title}
@@ -101,7 +107,9 @@ class Book extends Component {
 
 Book.propTypes = {
     classes: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    onBookChangeShelf: PropTypes.func.isRequired,
     authors: PropTypes.arrayOf(PropTypes.string),
     shelf: PropTypes.string,
     imageLinks: PropTypes.shape({

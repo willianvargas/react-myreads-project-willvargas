@@ -22,12 +22,18 @@ class BookMenu extends Component {
         anchorEl: null,
     }
 
-    handleClick = event => {
+    handleOpen = (event) => {
         this.setState({ anchorEl: event.currentTarget })
     }
 
     handleClose = () => {
         this.setState({ anchorEl: null })
+    }
+
+    handleClick = (shelf) => {
+        this.handleClose()
+        const { onChangeShelf } = this.props
+        onChangeShelf(shelf)
     }
 
     render() {
@@ -39,7 +45,7 @@ class BookMenu extends Component {
                     aria-label="Shelves"
                     aria-owns={anchorEl ? 'long-menu' : null}
                     aria-haspopup="true"
-                    onClick={this.handleClick}
+                    onClick={this.handleOpen}
                 >
                     <MoreVertIcon />
                 </IconButton>
@@ -61,7 +67,9 @@ class BookMenu extends Component {
                         <MenuItem
                             key={option.id}
                             selected={option.id === shelf}
-                            onClick={this.handleClose}
+                            onClick={() => {
+                                this.handleClick(option.id)
+                            }}
                         >
                             {option.title}
                         </MenuItem>
@@ -73,7 +81,8 @@ class BookMenu extends Component {
 }
 
 BookMenu.propTypes = {
-    shelf: PropTypes.string.isRequired
+    shelf: PropTypes.string.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
 }
 
 export default BookMenu

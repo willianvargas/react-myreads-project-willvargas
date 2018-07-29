@@ -10,7 +10,7 @@ import MuiTheme from '../styles/MuiTheme'
 
 import shelves from '../constants/shelves'
 
-import { getAll } from '../BooksAPI'
+import { getAll, update } from '../BooksAPI'
 
 import MainLayout from '../MainLayout'
 import LoadingState from '../LoadingState'
@@ -25,15 +25,39 @@ class HomePage extends Component {
     }
 
     componentWillMount() {
-        getAll().then((books) => {
-            console.log(books)
-            this.mapBooksFromApi(books)
-        })
+        getAll()
+            .then(books => {
+                this.mapBooksFromApi(books)
+            })
     }
 
     onClickLibraryAdd = (e) => {
         e.stopPropagation()
         console.log("Click add")
+    }
+
+    onBookChangeShelf = (id, shelf) => {
+        const { books } = this.state
+        const book = books[id]
+        update(book, shelf)
+            .then(shelves => {
+                console.log(shelves)
+                this.updateShelvesFromApi(shelves)
+            })
+    }
+
+    updateShelvesFromApi(shelves) {
+        let { books } = this.state
+        const new_books = {}
+        Object
+            .keys(shelves)
+            .forEach(shelf => {
+                shelves[shelf].forEach(bookId => {
+                    books[bookId].shelf = shelf
+                    new_books[bookId] = books[bookId]
+                })
+            })
+        this.setState({ books: new_books })
     }
 
     mapBooksFromApi(apiBooks) {
@@ -51,15 +75,15 @@ class HomePage extends Component {
     render() {
         const { books } = this.state
         const { location } = this.props
-        const filter = location.pathname.split('/')[1]
+        const page = location.pathname.split('/')[1]
         const bookList = Object.keys(books).map(key => books[key])
         return (
             <MuiThemeProvider theme={MuiTheme}>
                 <CssBaseline />
                 <MainLayout>
                     {bookList.length > 0 ? (
-                        (filter ? (
-                            shelves.filter(shelf => shelf.id === filter)
+                        (page ? (
+                            shelves.filter(shelf => shelf.id === page)
                         ) : (
                             shelves
                         )).map(shelf => {
@@ -69,6 +93,7 @@ class HomePage extends Component {
                                     key={shelf.id}
                                     {...shelf}
                                     books={shelfBooks}
+                                    onBookChangeShelf={this.onBookChangeShelf}
                                 />
                             )
                         })
