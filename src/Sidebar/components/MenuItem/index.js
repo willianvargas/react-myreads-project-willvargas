@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { Link } from 'react-router-dom'
 
 import { withStyles } from '@material-ui/core/styles'
 import ListItem from '@material-ui/core/ListItem'
@@ -9,6 +10,10 @@ import ListItemText from '@material-ui/core/ListItemText'
 
 
 const styles = theme => ({
+    root: {
+        color: 'inherit',
+        textDecoration: 'none'
+    },
     iconActive: {
         color: theme.palette.primary.dark
     },
@@ -17,36 +22,31 @@ const styles = theme => ({
     }
 })
 
-const MenuItem = ({ classes, id, icon, text, active, onClick }) => (
-    <ListItem
-        button
-        onClick={(e) => {
-            e.stopPropagation()
-            onClick(id)
-        }}
-    >
-        {icon && (
-            <ListItemIcon
+const MenuItem = ({ classes, link, icon, text, active }) => (
+    <Link to={link} class={classes.root}>
+        <ListItem button>
+            {icon && (
+                <ListItemIcon
+                    classes={{
+                        root: classNames(active && classes.iconActive)
+                    }}
+                >
+                    {icon}
+                </ListItemIcon>
+            )}
+            <ListItemText
+                primary={text}
                 classes={{
-                    root: classNames(active && classes.iconActive)
+                    primary: classNames(active && classes.textActive)
                 }}
-            >
-                {icon}
-            </ListItemIcon>
-        )}
-        <ListItemText
-            primary={text}
-            classes={{
-                primary: classNames(active && classes.textActive)
-            }}
-        />
-    </ListItem>
+            />
+        </ListItem>
+    </Link>
 )
 
 MenuItem.propTypes = {
     classes: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
+    link: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
     active: PropTypes.bool,
     icon: PropTypes.element

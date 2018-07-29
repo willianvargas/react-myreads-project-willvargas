@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -11,7 +14,7 @@ import { getAll } from '../BooksAPI'
 
 import MainLayout from '../MainLayout'
 import LoadingState from '../LoadingState'
-import LibraryAddButton from '../LibraryAddButton'
+import SearchButton from '../SearchButton'
 import Shelf from '../Shelf'
 
 
@@ -47,13 +50,19 @@ class HomePage extends Component {
 
     render() {
         const { books } = this.state
+        const { location } = this.props
+        const filter = location.pathname.split('/')[1]
         const bookList = Object.keys(books).map(key => books[key])
         return (
             <MuiThemeProvider theme={MuiTheme}>
                 <CssBaseline />
                 <MainLayout>
                     {bookList.length > 0 ? (
-                        shelves.map(shelf => {
+                        (filter ? (
+                            shelves.filter(shelf => shelf.id === filter)
+                        ) : (
+                            shelves
+                        )).map(shelf => {
                         const shelfBooks = bookList.filter(book => book.shelf === shelf.id)
                             return (
                                 <Shelf
@@ -67,12 +76,18 @@ class HomePage extends Component {
                         <LoadingState />
                     )}
                 </MainLayout>
-                <LibraryAddButton onClick={this.onClickLibraryAdd} />
+                <Link to="/search">
+                    <SearchButton />
+                </Link>
             </MuiThemeProvider>
         )
     }
 
 }
 
+HomePage.propTypes = {
+    location: PropTypes.object.isRequired
+}
 
-export default HomePage
+
+export default withRouter(HomePage)

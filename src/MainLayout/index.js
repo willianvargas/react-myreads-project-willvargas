@@ -136,7 +136,7 @@ class MainLayout extends Component {
 MainLayout.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
 }
 
 export default withStyles(styles, { withTheme: true })(MainLayout)

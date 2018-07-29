@@ -1,68 +1,38 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import List from '@material-ui/core/List'
-import {
-    Home as HomeIcon,
-    LocalLibrary as CurrentlyReadingIcon,
-    CollectionsBookmark as WantToReadIcon,
-    LibraryBooks as ReadIcon
-} from '@material-ui/icons'
+import { Home as HomeIcon } from '@material-ui/icons'
 
 import MenuItem from './components/MenuItem'
+
+import shelves from '../constants/shelves'
 
 const itens = [
     {
         id: "home",
-        text: "Home",
-        icon: <HomeIcon />
+        title: "Home",
+        Icon: <HomeIcon />
     },
-    {
-        id: "currentlyReading",
-        text: "Currently Reading",
-        icon: <CurrentlyReadingIcon />
-    },
-    {
-        id: "wantToRead",
-        text: "Want to Read",
-        icon: <WantToReadIcon />
-    },
-    {
-        id: "read",
-        text: "Read",
-        icon: <ReadIcon />
-    }
+    ...shelves
 ]
 
 
-class SideBar extends Component {
-
-    state = {
-        active: "home"
-    }
-
-    handleClick = (id) => {
-        this.setState({ active: id })
-    }
-
-    render() {
-        const { active } = this.state
-        return (
-            <List>
-                {itens.map((item) => {
-                    return (
-                        <MenuItem
-                            key={item.id}
-                            id={item.id}
-                            text={item.text}
-                            icon={item.icon}
-                            active={active === item.id}
-                            onClick={this.handleClick}
-                        />
-                    )
-                })}
-            </List>
-        )
-    }
+const SideBar = ({ active }) => {
+    return (
+        <List component="div">
+            {itens.map((item) => {
+                return (
+                    <MenuItem
+                        key={item.id}
+                        link={item.id === 'home' ? '/' : '/' + item.id}
+                        text={item.title}
+                        icon={item.Icon}
+                        active={active === item.id}
+                    />
+                )
+            })}
+        </List>
+    )
 }
 
 export default SideBar

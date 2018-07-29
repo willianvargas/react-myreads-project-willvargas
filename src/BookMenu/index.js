@@ -8,6 +8,13 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 
 import shelves from '../constants/shelves'
 
+const options = [
+    ...shelves,
+    {
+        id: 'none',
+        title: 'None'
+    }
+]
 
 class BookMenu extends Component {
 
@@ -26,13 +33,6 @@ class BookMenu extends Component {
     render() {
         const { anchorEl } = this.state
         const { shelf } = this.props
-        const options = [
-            ...shelves,
-            {
-                id: 'none',
-                title: 'None'
-            }
-        ]
         return (
             <div>
                 <IconButton
