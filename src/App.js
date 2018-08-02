@@ -10,6 +10,7 @@ import { getAll, update } from './BooksAPI'
 
 import MainLayout from "./MainLayout"
 import HomePage from "./HomePage"
+import SearchPage from "./SearchPage"
 
 
 class App extends Component {
@@ -74,6 +75,15 @@ class App extends Component {
                 <Router>
                     <MainLayout>
                         <Switch>
+                            <Route
+                                path="/search"
+                                render={() => (
+                                    <SearchPage
+                                        books={books}
+                                        onBookChangeShelf={this.onBookChangeShelf}
+                                    />
+                                )}
+                            />
                             <Route
                                 path="/"
                                 render={() => (
