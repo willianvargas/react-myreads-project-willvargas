@@ -14,6 +14,9 @@ const styles = theme => ({
         color: 'inherit',
         textDecoration: 'none'
     },
+    containerActive: {
+        background: theme.palette.grey["200"]
+    },
     iconActive: {
         color: theme.palette.primary.dark
     },
@@ -22,9 +25,9 @@ const styles = theme => ({
     }
 })
 
-const MenuItem = ({ classes, link, icon, text, active }) => (
-    <Link to={link} className={classes.root}>
-        <ListItem button>
+const MenuItem = ({ classes, link, onClick, icon, text, active }) => (
+    <Link className={classes.root} to={link} onClick={onClick}>
+        <ListItem button className={classNames(active && classes.containerActive)}>
             {icon && (
                 <ListItemIcon
                     classes={{
@@ -48,6 +51,7 @@ MenuItem.propTypes = {
     classes: PropTypes.object.isRequired,
     link: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
     active: PropTypes.bool,
     icon: PropTypes.element
 }

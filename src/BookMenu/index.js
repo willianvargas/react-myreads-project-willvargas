@@ -81,8 +81,12 @@ class BookMenu extends Component {
 }
 
 BookMenu.propTypes = {
-    shelf: PropTypes.string.isRequired,
-    onChangeShelf: PropTypes.func.isRequired
+    onChangeShelf: PropTypes.func.isRequired,
+    shelf: PropTypes.string
+}
+
+BookMenu.defaultProps = {
+    shelf: 'none'
 }
 
 export default BookMenu

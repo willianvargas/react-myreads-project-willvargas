@@ -20,28 +20,30 @@ class App extends Component {
     }
 
     componentWillMount() {
-        getAll()
-            .then(books => {
-                this.mapBooksFromApi(books)
-            })
+        getAll().then(this.mapBooksFromApi)
     }
 
-    onClickLibraryAdd = (e) => {
-        e.stopPropagation()
-        console.log("Click add")
-    }
-
-    onBookChangeShelf = (id, shelf) => {
+    onBookChangeShelf = (book, shelf) => {
         const { books } = this.state
-        const book = books[id]
-        update(book, shelf)
-            .then(shelves => {
-                console.log(shelves)
-                this.updateShelvesFromApi(shelves)
-            })
+        if (books[book.id] === undefined) {
+            books[book.id] = book
+        }
+        update(book, shelf).then(this.syncShelvesWithApi)
     }
 
-    updateShelvesFromApi(shelves) {
+    mapBooksFromApi = (apiBooks) => {
+        let { books } = {}
+        apiBooks.forEach(book => {
+            const { id } = book
+            books = {
+                ...books,
+                [id]: book
+            }
+        })
+        this.setState({ books })
+    }
+
+    syncShelvesWithApi = (shelves) => {
         let { books } = this.state
         const new_books = {}
         Object
@@ -53,18 +55,6 @@ class App extends Component {
                 })
             })
         this.setState({ books: new_books })
-    }
-
-    mapBooksFromApi(apiBooks) {
-        let { books } = {}
-        apiBooks.forEach(book => {
-            const { id } = book
-            books = {
-                ...books,
-                [id]: book
-            }
-        })
-        this.setState({ books })
     }
 
     render() {

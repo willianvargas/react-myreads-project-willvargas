@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from "react-router"
 
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -64,6 +65,10 @@ class MainLayout extends Component {
         mobileOpen: false
     }
 
+    onClickSidebarItem = () => {
+        this.handleDrawerMobileClose()
+    }
+
     handleDrawerToggle = () => {
         const { theme } = this.props
         const width = theme.breakpoints.values.md
@@ -82,7 +87,8 @@ class MainLayout extends Component {
 
     render() {
         const { mobileOpen, open } = this.state
-        const { classes, children } = this.props
+        const { classes, children, location } = this.props
+        const currentPage = location.pathname.split('/')[1] || 'home'
         return (
             <div className={classes.root}>
                 <AppBar
@@ -116,12 +122,12 @@ class MainLayout extends Component {
                 </AppBar>
                 <Hidden smDown implementation="css">
                     <SidebarDrawer open={open}>
-                        <SideBar />
+                        <SideBar active={currentPage} onClickItem={this.onClickSidebarItem} />
                     </SidebarDrawer>
                 </Hidden>
                 <Hidden mdUp>
                     <SidebarDrawer open={mobileOpen} mobile onClose={this.handleDrawerMobileClose}>
-                        <SideBar />
+                        <SideBar active={currentPage} onClickItem={this.onClickSidebarItem} />
                     </SidebarDrawer>
                 </Hidden>
                 <main className={classes.content}>
@@ -136,7 +142,10 @@ class MainLayout extends Component {
 MainLayout.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
-    children: PropTypes.node.isRequired,
+    location: PropTypes.object.isRequired,
+    children: PropTypes.node.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(MainLayout)
+export default withRouter(
+    withStyles(styles, { withTheme: true })(MainLayout)
+)

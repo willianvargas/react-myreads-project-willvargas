@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -11,6 +11,7 @@ import Search from '@material-ui/icons/Search'
 const styles = theme => ({
     root: {
         width: '100%',
+        marginBottom: theme.spacing.unit * 4
     },
     form: {
         flexGrow: 1,
@@ -40,7 +41,9 @@ const SearchInput = ({ classes, value, onChange }) => (
             <Grid item xs={11}>
                 <TextField
                     value={value}
-                    onChange={onChange}
+                    onChange={(e) => {
+                        onChange(e.target.value)
+                    }}
                     id="search"
                     label="Search"
                     placeholder="artificial intelligence"

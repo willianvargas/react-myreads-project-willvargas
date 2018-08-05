@@ -59,8 +59,9 @@ const styles = theme => ({
 const defaultThumbnail = 'https://books.google.com.br/googlebooks/images/no_cover_thumb.gif'
 
 
-const Book = ({ classes, id, title, authors, shelf, imageLinks: { thumbnail },
-                  onBookChangeShelf }) => {
+const Book = ({ classes, book, onBookChangeShelf }) => {
+    const { title, authors, shelf, imageLinks } = book
+    const { thumbnail } = imageLinks || {}
     const thumbnailStyle = {
         backgroundImage: `url(${thumbnail || defaultThumbnail})`
     }
@@ -81,7 +82,7 @@ const Book = ({ classes, id, title, authors, shelf, imageLinks: { thumbnail },
                     <BookMenu
                         shelf={shelf}
                         onChangeShelf={(shelf) => {
-                            onBookChangeShelf(id, shelf)
+                            onBookChangeShelf(book, shelf)
                         }}
                     />
                 </div>
@@ -104,24 +105,8 @@ const Book = ({ classes, id, title, authors, shelf, imageLinks: { thumbnail },
 
 Book.propTypes = {
     classes: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    onBookChangeShelf: PropTypes.func.isRequired,
-    authors: PropTypes.arrayOf(PropTypes.string),
-    shelf: PropTypes.string,
-    imageLinks: PropTypes.shape({
-        smallThumbnail: PropTypes.string,
-        thumbnail: PropTypes.string
-    })
-}
-
-Book.defaultProps = {
-    authors: null,
-    shelf: null,
-    imageLinks: {
-        smallThumbnail: null,
-        thumbnail: null
-    }
+    book: PropTypes.object.isRequired,
+    onBookChangeShelf: PropTypes.func.isRequired
 }
 
 export default withStyles(styles, { withTheme: true })(Book)

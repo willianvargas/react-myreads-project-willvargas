@@ -9,17 +9,17 @@ const shelves = [
     {
         id: 'currentlyReading',
         title: 'Currently Reading',
-        Icon: <CurrentlyReadingIcon />,
+        icon: <CurrentlyReadingIcon />,
     },
     {
         id: 'wantToRead',
         title: 'Want to Read',
-        Icon: <WantToReadIcon />
+        icon: <WantToReadIcon />
     },
     {
         id: 'read',
         title: 'Read',
-        Icon: <ReadIcon />
+        icon: <ReadIcon />
     },
 ]
 

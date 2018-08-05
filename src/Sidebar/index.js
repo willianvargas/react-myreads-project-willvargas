@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import List from '@material-ui/core/List'
 import { Home as HomeIcon } from '@material-ui/icons'
@@ -11,13 +12,13 @@ const itens = [
     {
         id: "home",
         title: "Home",
-        Icon: <HomeIcon />
+        icon: <HomeIcon />
     },
     ...shelves
 ]
 
 
-const SideBar = ({ active }) => {
+const SideBar = ({ active, onClickItem }) => {
     return (
         <List component="div">
             {itens.map((item) => {
@@ -26,13 +27,21 @@ const SideBar = ({ active }) => {
                         key={item.id}
                         link={item.id === 'home' ? '/' : '/' + item.id}
                         text={item.title}
-                        icon={item.Icon}
+                        icon={item.icon}
                         active={active === item.id}
+                        onClick={() => {
+                            onClickItem(item.id)
+                        }}
                     />
                 )
             })}
         </List>
     )
+}
+
+SideBar.propTypes = {
+    active: PropTypes.string.isRequired,
+    onClickItem: PropTypes.func.isRequired
 }
 
 export default SideBar
