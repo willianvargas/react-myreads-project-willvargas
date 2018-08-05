@@ -46,7 +46,7 @@ const SearchInput = ({ classes, value, onChange }) => (
                     }}
                     id="search"
                     label="Search"
-                    placeholder="artificial intelligence"
+                    placeholder="Search by title or author"
                     fullWidth
                     autoFocus
                     InputLabelProps={{
