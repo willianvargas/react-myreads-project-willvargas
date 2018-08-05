@@ -1,4 +1,16 @@
 {
+  "name": "react-myreads-project-willvargas",
+  "version": "1.0",
+  "description": "Udacity Developer React Nanodegree Project - MyReads",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willianvargas/react-myreads-project-willvargas.git"
+  },
+  "author": {
+    "name": "Willian Vargas",
+    "email": "contato@willianvargas.com"
+  },
+  "keywords": ["react", "reactjs", "udacity", "myreads"],
   "dependencies": {
     "@material-ui/core": "^1.4.0",
     "@material-ui/icons": "^2.0.0-beta.1",

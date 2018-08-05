@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 import MuiTheme from './styles/MuiTheme'
 
-import { getAll, update } from './BooksAPI'
+import { getAll, update } from './services/BooksAPI'
 
 import MainLayout from "./MainLayout"
 import HomePage from "./HomePage"

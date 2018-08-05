@@ -4,7 +4,7 @@ import { withRouter } from 'react-router'
 
 import Typography from '@material-ui/core/Typography'
 
-import { search } from "../BooksAPI"
+import { search } from "../services/BooksAPI"
 
 import Shelf from '../Shelf'
 import Title from '../Title'
