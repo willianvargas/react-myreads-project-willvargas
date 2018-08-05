@@ -20,6 +20,16 @@ class SearchPage extends Component {
         loading: false
     }
 
+    componentWillReceiveProps() {
+        const { searchResults } = this.state
+        if (searchResults) {
+            const updatedBooks = this.mapResultsWithLocalBooks(searchResults)
+            this.setState({
+                searchResults: updatedBooks
+            })
+        }
+    }
+
     componentWillUpdate(nextProps, nextState) {
         const { search } = this.state
         if (nextState.search !== search && nextState.search.length > 0) {
@@ -99,7 +109,7 @@ class SearchPage extends Component {
                     value={search}
                     onChange={this.onChangeSearch}
                 />
-                {(search && searchResults || loading) && (
+                {((search && searchResults) || loading) && (
                     <div>
                         <Title>
                             {`Search results for: ${search}`}

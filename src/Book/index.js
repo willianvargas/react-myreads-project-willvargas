@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
@@ -17,11 +17,15 @@ const styles = theme => ({
         padding: theme.spacing.unit
     },
     thumbnailContent: {
+        userSelect: 'none',
         position: 'relative',
         overflow: 'hidden',
         backgroundColor: grey[200]
     },
     thumbnail: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         width: '100%',
         height: 180,
         position: 'relative',
@@ -34,6 +38,10 @@ const styles = theme => ({
         backgroundSize: 'cover',
         filter: 'blur(10px)',
         transform: 'scale(1.2)'
+    },
+    noThumbnail: {
+        fontSize: '1.4em',
+        color: theme.palette.grey["500"]
     },
     description: {
         position: 'relative',
@@ -56,26 +64,30 @@ const styles = theme => ({
     }
 })
 
-const defaultThumbnail = 'https://books.google.com.br/googlebooks/images/no_cover_thumb.gif'
-
 
 const Book = ({ classes, book, onBookChangeShelf }) => {
     const { title, authors, shelf, imageLinks } = book
     const { thumbnail } = imageLinks || {}
     const thumbnailStyle = {
-        backgroundImage: `url(${thumbnail || defaultThumbnail})`
+        backgroundImage: `url(${thumbnail})`
     }
     return (
         <Paper className={classes.root}>
             <div className={classes.thumbnailContent}>
                 <div
                     className={classNames(classes.thumbnail, classes.thumbnailBlur)}
-                    style={thumbnailStyle}
+                    style={thumbnail && thumbnailStyle}
                 />
                 <div
                     className={classes.thumbnail}
-                    style={thumbnailStyle}
-                />
+                    style={thumbnail && thumbnailStyle}
+                >
+                    {thumbnail === undefined && (
+                        <Typography className={classes.noThumbnail} variant="body1">
+                            no image
+                        </Typography>
+                    )}
+                </div>
             </div>
             <div className={classes.description}>
                 <div className={classes.menu}>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
 
 import Title from '../Title'
 import Book from '../Book'
@@ -21,18 +22,26 @@ const Shelf = ({ classes, icon, title, books, onBookChangeShelf }) => (
             </Title>
         )}
         <Grid container spacing={24} alignItems="stretch">
-            {books.map(
-                book => {
-                    return (
-                        <Grid key={book.id} item>
-                            <Book
-                                book={book}
-                                onBookChangeShelf={onBookChangeShelf}
-                            />
-                        </Grid>
-                    )
-                })
-            }
+            {books.length > 0 ? (
+                books.map(
+                    book => {
+                        return (
+                            <Grid key={book.id} item>
+                                <Book
+                                    book={book}
+                                    onBookChangeShelf={onBookChangeShelf}
+                                />
+                            </Grid>
+                        )
+                    }
+                )
+            ) : (
+                <Grid item>
+                    <Typography variant="body1">
+                        No books for this shelf
+                    </Typography>
+                </Grid>
+            )}
         </Grid>
     </Grid>
 )
