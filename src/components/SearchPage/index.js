@@ -4,12 +4,12 @@ import { withRouter } from 'react-router'
 
 import Typography from '@material-ui/core/Typography'
 
-import { search } from "../services/BooksAPI"
+import { search } from "../../services/BooksAPI"
 
-import Shelf from '../Shelf'
-import Title from '../Title'
-import LoadingState from '../LoadingState'
-import SearchInput from '../SearchInput'
+import Shelf from '../Shelf/index'
+import Title from '../Title/index'
+import LoadingState from '../LoadingState/index'
+import SearchInput from '../SearchInput/index'
 
 
 class SearchPage extends Component {

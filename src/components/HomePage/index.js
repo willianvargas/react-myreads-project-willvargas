@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { withRouter } from 'react-router'
 
-import shelves from '../constants/shelves'
+import shelves from '../../constants/shelves'
 
-import LoadingState from '../LoadingState'
-import SearchButton from '../SearchButton'
-import Shelf from '../Shelf'
+import LoadingState from '../LoadingState/index'
+import SearchButton from '../SearchButton/index'
+import Shelf from '../Shelf/index'
 
 
 const HomePage = ({ books, onBookChangeShelf, location }) => {

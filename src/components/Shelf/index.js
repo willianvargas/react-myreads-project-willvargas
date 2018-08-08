@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
 import Title from '../Title'
-import Book from '../Book'
+import Book from '../Book/index'
 
 const styles = theme => ({
     root: {

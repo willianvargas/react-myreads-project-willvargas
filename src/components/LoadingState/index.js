@@ -12,7 +12,7 @@ const styles = theme => ({
         height: 50
     },
     inline: {
-        marginTop: theme.spacing.unit * 8,
+        marginTop: theme.spacing.unit * 10,
         marginLeft: 'auto',
         marginRight: 'auto'
     },

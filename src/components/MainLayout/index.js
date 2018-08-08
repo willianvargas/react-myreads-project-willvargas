@@ -11,8 +11,8 @@ import IconButton from '@material-ui/core/IconButton'
 import Hidden from '@material-ui/core/Hidden'
 import MenuIcon from '@material-ui/icons/Menu'
 
-import SidebarDrawer from '../SidebarDrawer'
-import SideBar from '../Sidebar'
+import SidebarDrawer from '../SidebarDrawer/index'
+import SideBar from '../Sidebar/index'
 
 
 const styles = theme => ({

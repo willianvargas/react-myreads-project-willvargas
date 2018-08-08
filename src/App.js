@@ -8,9 +8,9 @@ import MuiTheme from './styles/MuiTheme'
 
 import { getAll, update } from './services/BooksAPI'
 
-import MainLayout from "./MainLayout"
-import HomePage from "./HomePage"
-import SearchPage from "./SearchPage"
+import MainLayout from "./components/MainLayout"
+import HomePage from "./components/HomePage"
+import SearchPage from "./components/SearchPage"
 
 
 class App extends Component {
@@ -19,18 +19,36 @@ class App extends Component {
         books: {}
     }
 
+    /**
+     * On app mount request the books to API then map it
+     */
     componentWillMount() {
         getAll().then(this.mapBooksFromApi)
     }
 
+    /**
+     * Saves the new book's shelf on the app books state and update on API
+     *
+     * @param {object} book - The book object, usually the same fetched from API
+     * @param {string} shelf - The id of the new book's shelf
+     */
     onBookChangeShelf = (book, shelf) => {
         const { books } = this.state
-        if (books[book.id] === undefined) {
-            books[book.id] = book
-        }
+        book.shelf = shelf
+        this.setState({
+            books: {
+                ...books,
+                [book.id]: book
+            }
+        })
         update(book, shelf).then(this.syncShelvesWithApi)
     }
 
+    /**
+     * Maps the books retrieved from API and set on the app state
+     *
+     * @param {Object[]} apiBooks - Array of books objects
+     */
     mapBooksFromApi = (apiBooks) => {
         let { books } = {}
         apiBooks.forEach(book => {
@@ -43,6 +61,12 @@ class App extends Component {
         this.setState({ books })
     }
 
+    /**
+     * Maps the shelves returned on the update book API request
+     * and update the app books state
+     *
+     * @param {object} shelves - Dictionary with the shelves and books relationship
+     */
     syncShelvesWithApi = (shelves) => {
         let { books } = this.state
         const new_books = {}
@@ -50,8 +74,9 @@ class App extends Component {
             .keys(shelves)
             .forEach(shelf => {
                 shelves[shelf].forEach(bookId => {
-                    books[bookId].shelf = shelf
-                    new_books[bookId] = books[bookId]
+                    const book = books[bookId]
+                    book.shelf = shelf
+                    new_books[bookId] = book
                 })
             })
         this.setState({ books: new_books })
