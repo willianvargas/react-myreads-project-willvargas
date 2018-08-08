@@ -27,20 +27,27 @@ class App extends Component {
     }
 
     /**
-     * Saves the new book's shelf on the app books state and update on API
+     * Saves the new book's shelf
+     *
+     * First register the book on app state case if it is not there
+     *  - This case happens if the book did not belong to any shelf
+     *
+     * Then update the book shelf on API
      *
      * @param {object} book - The book object, usually the same fetched from API
      * @param {string} shelf - The id of the new book's shelf
      */
     onBookChangeShelf = (book, shelf) => {
         const { books } = this.state
-        book.shelf = shelf
-        this.setState({
-            books: {
-                ...books,
-                [book.id]: book
-            }
-        })
+        if (books[book.id] === undefined) {
+            this.setState({
+                books: {
+                    ...books,
+                    [book.id]: book
+                }
+            })
+
+        }
         update(book, shelf).then(this.syncShelvesWithApi)
     }
 
