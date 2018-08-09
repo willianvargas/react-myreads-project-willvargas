@@ -82,8 +82,10 @@ class App extends Component {
             .forEach(shelf => {
                 shelves[shelf].forEach(bookId => {
                     const book = books[bookId]
-                    book.shelf = shelf
-                    new_books[bookId] = book
+                    new_books[bookId] = {
+                        ...book,
+                        shelf
+                    }
                 })
             })
         this.setState({ books: new_books })
