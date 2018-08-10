@@ -7,58 +7,64 @@ import BookMenu from '../BookMenu'
 import books from '../../tests/books'
 
 
-it('Component render without errors', () => {
-    const onBookChangeShelf = () => {}
-    const book = books[0]
+describe('Book component', () => {
 
-    const element = render(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
+    it('render without errors', () => {
+        const onBookChangeShelf = () => {}
+        const book = books[0]
 
-    expect(element)
-        .toMatchSnapshot()
-})
+        const element = render(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
 
-
-it('Component render without cover image', () => {
-    const onBookChangeShelf = () => {}
-    const imageLinks = null
-    const book = {
-        ...books[0],
-        imageLinks
-    }
-
-    render(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
-})
+        expect(element)
+            .toMatchSnapshot()
+    })
 
 
-it('Component render without authors', () => {
-    const onBookChangeShelf = () => {}
-    const authors = null
-    const book = {
-        ...books[0],
-        authors
-    }
+    it('render without cover image', () => {
+        const onBookChangeShelf = () => {}
+        const imageLinks = null
+        const book = {
+            ...books[0],
+            imageLinks
+        }
 
-    render(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
-})
+        render(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
+    })
 
 
-it('Component trigger onBookChangeShelf function', () => {
-    const onBookChangeShelf = jest.fn()
-    const shelf = 'none'
-    const book = {
-        ...books[0],
-        shelf
-    }
+    it('render without authors', () => {
+        const onBookChangeShelf = () => {}
+        const authors = null
+        const book = {
+            ...books[0],
+            authors
+        }
 
-    const wrapper = mount(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
+        render(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
+    })
 
-    const menu = wrapper.find(BookMenu)
 
-    menu.find('button').simulate('click')
+    it('trigger onBookChangeShelf function', () => {
+        const onBookChangeShelf = jest.fn()
+        const shelf = 'none'
+        const book = {
+            ...books[0],
+            shelf
+        }
 
-    const menuItem = document.querySelectorAll('[data-role="menu-item"]')[0]
+        const wrapper = mount(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
 
-    menuItem.click()
+        const menu = wrapper.find(BookMenu)
 
-    expect(onBookChangeShelf).toBeCalled()
+        menu.find('button').simulate('click')
+
+        const menuItem = document.querySelectorAll('[data-role="menu-item"]')[0]
+
+        menuItem.click()
+
+        expect(onBookChangeShelf).toBeCalled()
+
+        wrapper.unmount()
+    })
+
 })

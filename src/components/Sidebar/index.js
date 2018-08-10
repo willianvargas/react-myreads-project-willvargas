@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import List from '@material-ui/core/List'
 import { Home as HomeIcon } from '@material-ui/icons'
 
-import MenuItem from './components/MenuItem/index'
+import MenuItem from '../MenuItem'
 
 import shelves from '../../constants/shelves'
 

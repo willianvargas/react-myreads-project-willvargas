@@ -45,5 +45,5 @@ LoadingState.defaultProps = {
     inline: false
 }
 
-export default withStyles(styles, { withTheme: true})(LoadingState)
+export default withStyles(styles, { withTheme: true })(LoadingState)
 

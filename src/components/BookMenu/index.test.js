@@ -4,56 +4,58 @@ import { mount, render } from 'enzyme'
 import BookMenu from '.'
 
 
-it('Component render without errors', () => {
-    const onChangeShelf = () => {}
-    const shelf = 'read'
+describe('Book menu component', () => {
 
-    const element = render(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
+    it('render without errors', () => {
+        const onChangeShelf = () => {}
+        const shelf = 'read'
 
-    expect(element)
-        .toMatchSnapshot()
-})
+        const element = render(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
 
-
-it('Component render without shelf defined', () => {
-    const onChangeShelf = () => {}
-    const shelf = undefined
-
-    render(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
-})
+        expect(element).toMatchSnapshot()
+    })
 
 
-it('Component render the correct shelf', () => {
-    const onChangeShelf = () => {}
-    const shelf = "read"
+    it('render without shelf defined', () => {
+        const onChangeShelf = () => {}
+        const shelf = undefined
 
-    const wrapper = mount(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
-
-    wrapper.find('button').simulate('click')
-
-    const selected = document.querySelectorAll('[data-selected="true"]')[0]
-
-    expect(selected.innerHTML.toLowerCase())
-        .toEqual(expect.stringContaining(shelf))
-
-    wrapper.unmount()
-})
+        render(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
+    })
 
 
-it('Component trigger onChangeShelf function', () => {
+    it('render the correct shelf', () => {
+        const onChangeShelf = () => {}
+        const shelf = "read"
 
-    const onChangeShelf = jest.fn()
-    const shelf = "none"
+        const wrapper = mount(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
 
-    const wrapper = mount(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
+        wrapper.find('button').simulate('click')
 
-    wrapper.find('button').simulate('click')
+        const selected = document.querySelectorAll('[data-selected="true"]')[0]
 
-    const firstMenuItem = document.querySelectorAll('[data-role="menu-item"]')[0]
+        expect(selected.innerHTML.toLowerCase())
+            .toEqual(expect.stringContaining(shelf))
 
-    firstMenuItem.click()
+        wrapper.unmount()
+    })
 
-    expect(onChangeShelf).toBeCalled()
 
-    wrapper.unmount()
+    it('trigger onChangeShelf function', () => {
+        const onChangeShelf = jest.fn()
+        const shelf = "none"
+
+        const wrapper = mount(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
+
+        wrapper.find('button').simulate('click')
+
+        const firstMenuItem = document.querySelectorAll('[data-role="menu-item"]')[0]
+
+        firstMenuItem.click()
+
+        expect(onChangeShelf).toBeCalled()
+
+        wrapper.unmount()
+    })
+
 })
