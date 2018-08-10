@@ -10,11 +10,18 @@
     "name": "Willian Vargas",
     "email": "contato@willianvargas.com"
   },
-  "keywords": ["react", "reactjs", "udacity", "myreads"],
+  "keywords": [
+    "react",
+    "reactjs",
+    "udacity",
+    "myreads"
+  ],
   "dependencies": {
     "@material-ui/core": "^1.4.0",
     "@material-ui/icons": "^2.0.0-beta.1",
     "classnames": "^2.2.6",
+    "enzyme": "^3.4.1",
+    "enzyme-adapter-react-16": "^1.2.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -22,17 +29,31 @@
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
+    "enzyme-to-json": "^3.3.4",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.10.0",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-test-renderer": "^16.4.2"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js}",
+      "!src/tests/*",
+      "!src/styles/*",
+      "!src/services/BooksAPI.js"
+    ]
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "test:coverage": "npm test -- --coverage",
     "eject": "react-scripts eject"
   }
 }

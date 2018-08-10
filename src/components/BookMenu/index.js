@@ -66,6 +66,8 @@ class BookMenu extends Component {
                     {options.map(option => (
                         <MenuItem
                             key={option.id}
+                            data-role="menu-item"
+                            data-selected={(option.id === shelf).toString()}
                             selected={option.id === shelf}
                             onClick={() => {
                                 this.handleClick(option.id)
