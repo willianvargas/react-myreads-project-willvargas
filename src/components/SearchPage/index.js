@@ -20,10 +20,11 @@ class SearchPage extends Component {
         loading: false
     }
 
-    componentWillReceiveProps() {
+    componentWillReceiveProps(nextProps) {
+        const { books } = nextProps
         const { searchResults } = this.state
         if (searchResults) {
-            const updatedBooks = this.mapResultsWithLocalBooks(searchResults)
+            const updatedBooks = this.mapResultsWithBooks(searchResults, books)
             this.setState({
                 searchResults: updatedBooks
             })
@@ -57,7 +58,10 @@ class SearchPage extends Component {
     searchApi = (text) => {
         search(text)
             .then(this.checkResults)
-            .then(this.mapResultsWithLocalBooks)
+            .then(searchResults => {
+                const { books } = this.props
+                return this.mapResultsWithBooks(searchResults, books)
+            })
             .then(this.renderResults)
     }
 
@@ -68,12 +72,13 @@ class SearchPage extends Component {
         return searchResults
     }
 
-    mapResultsWithLocalBooks = (searchResults) => {
-        const { books } = this.props
+    mapResultsWithBooks = (searchResults, books) => {
         return searchResults.map(book => {
             const { id } = book
             if (books[id]) {
                 book.shelf = books[id].shelf
+            } else {
+                book.shelf = undefined
             }
             return book
         })
