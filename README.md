@@ -37,7 +37,7 @@ runs on localhost:3000
 
 ## Running Tests
 
-This project uses [Jest](https://facebook.github.io/jest/) (pre-configurated by Create React App) and
+This project uses [Jest](https://facebook.github.io/jest/) (preconfigured by Create React App) and
 [Enzyme](http://airbnb.io/enzyme/) that improves the testing techniques for React applications.
 
 * Run all tests `yarn test`
