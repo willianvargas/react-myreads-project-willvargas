@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router'
 
 import shelves from '../../constants/shelves'
 
@@ -10,18 +9,17 @@ import SearchButton from '../SearchButton/index'
 import Shelf from '../Shelf/index'
 
 
-const HomePage = ({ books, onBookChangeShelf, location }) => {
-    const page = location.pathname.split('/')[1]
+const HomePage = ({ books, onBookChangeShelf, shelfFilter }) => {
     const bookList = books ? Object.keys(books).map(key => books[key]) : []
     return (
         <div>
             {bookList.length > 0 ? (
-                (page ? (
-                    shelves.filter(shelf => shelf.id === page)
+                (shelfFilter ? (
+                    shelves.filter(shelf => shelf.id === shelfFilter)
                 ) : (
                     shelves
                 )).map(shelf => {
-                const shelfBooks = bookList.filter(book => book.shelf === shelf.id)
+                    const shelfBooks = bookList.filter(book => book.shelf === shelf.id)
                     return (
                         <Shelf
                             key={shelf.id}
@@ -42,13 +40,14 @@ const HomePage = ({ books, onBookChangeShelf, location }) => {
 }
 
 HomePage.propTypes = {
-    location: PropTypes.object.isRequired,
     onBookChangeShelf: PropTypes.func.isRequired,
+    shelfFilter: PropTypes.string,
     books: PropTypes.object
 }
 
 HomePage.defaultProps = {
+    shelfFilter: null,
     books: null
 }
 
-export default withRouter(HomePage)
+export default HomePage

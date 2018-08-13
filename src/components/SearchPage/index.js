@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
 
 import Typography from '@material-ui/core/Typography'
 
-import { search } from "../../services/BooksAPI"
+import { search } from '../../services/BooksAPI'
 
 import Shelf from '../Shelf/index'
 import Title from '../Title/index'
@@ -16,14 +15,14 @@ class SearchPage extends Component {
 
     state = {
         search: '',
-        searchResults: null,
+        searchResults: undefined,
         loading: false
     }
 
     componentWillReceiveProps(nextProps) {
-        const { books } = nextProps
         const { searchResults } = this.state
         if (searchResults) {
+            const { books } = nextProps
             const updatedBooks = this.mapResultsWithBooks(searchResults, books)
             this.setState({
                 searchResults: updatedBooks
@@ -42,7 +41,7 @@ class SearchPage extends Component {
         const nextState = { search: value }
         if (value.length === 0) {
             this.clearOnChangeTimeout()
-            nextState.searchResults = null
+            nextState.searchResults = undefined
         }
         this.setState(nextState)
     }
@@ -58,10 +57,7 @@ class SearchPage extends Component {
     searchApi = (text) => {
         search(text)
             .then(this.checkResults)
-            .then(searchResults => {
-                const { books } = this.props
-                return this.mapResultsWithBooks(searchResults, books)
-            })
+            .then(this.mapResultsWithPropsBooks)
             .then(this.renderResults)
     }
 
@@ -70,6 +66,11 @@ class SearchPage extends Component {
             searchResults = searchResults.items || []
         }
         return searchResults
+    }
+
+    mapResultsWithPropsBooks = (searchResults) => {
+        const { books } = this.props
+        return this.mapResultsWithBooks(searchResults, books)
     }
 
     mapResultsWithBooks = (searchResults, books) => {
@@ -88,7 +89,7 @@ class SearchPage extends Component {
         this.clearOnChangeTimeout()
         this.onChangeTimeout = setTimeout(() => {
             this.setState({
-                searchResults: null,
+                searchResults: undefined,
                 loading: true
             })
             this.searchApi(text)
@@ -145,4 +146,4 @@ SearchPage.propTypes = {
     books: PropTypes.object.isRequired
 }
 
-export default withRouter(SearchPage)
+export default SearchPage

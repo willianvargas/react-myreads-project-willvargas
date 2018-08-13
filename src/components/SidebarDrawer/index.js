@@ -41,11 +41,7 @@ const SidebarDrawer = ({ classes, open, children, mobile, onClose }) => {
         <Drawer
             variant={mobile ? "temporary" : "permanent"}
             open={open}
-            onClose={() => {
-                if (onClose) {
-                    onClose()
-                }
-            }}
+            onClose={onClose}
             classes={{
                 paper: classNames(
                     classes.root,
@@ -68,7 +64,7 @@ const SidebarDrawer = ({ classes, open, children, mobile, onClose }) => {
 SidebarDrawer.propTypes = {
     classes: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
-    children: PropTypes.element,
+    children: PropTypes.node,
     mobile: PropTypes.bool,
     onClose: PropTypes.func
 }

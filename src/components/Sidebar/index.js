@@ -18,7 +18,7 @@ const itens = [
 ]
 
 
-const SideBar = ({ active, onClickItem }) => {
+const SideBar = ({ activePage, onClickItem }) => {
     return (
         <List component="div">
             {itens.map((item) => {
@@ -28,7 +28,7 @@ const SideBar = ({ active, onClickItem }) => {
                         link={item.id === 'home' ? '/' : '/' + item.id}
                         text={item.title}
                         icon={item.icon}
-                        active={active === item.id}
+                        active={activePage === item.id}
                         onClick={() => {
                             onClickItem(item.id)
                         }}
@@ -40,7 +40,7 @@ const SideBar = ({ active, onClickItem }) => {
 }
 
 SideBar.propTypes = {
-    active: PropTypes.string.isRequired,
+    activePage: PropTypes.string.isRequired,
     onClickItem: PropTypes.func.isRequired
 }
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from "react-router"
 
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
@@ -61,34 +60,40 @@ const styles = theme => ({
 class MainLayout extends Component {
 
     state = {
-        open: true,
-        mobileOpen: false
+        sidebarOpen: true,
+        sidebarMobileOpen: false
     }
 
     onClickSidebarItem = () => {
-        this.handleDrawerMobileClose()
+        this.toggleDrawerMobile()
     }
 
-    handleDrawerToggle = () => {
+    onClickToolbarButton = () => {
         const { theme } = this.props
         const width = theme.breakpoints.values.md
-        const hideMobile = window.innerWidth > width
+        const mobile = window.innerWidth < width
+        if (mobile) {
+            this.toggleDrawerMobile()
+        } else {
+            this.toggleDrawer()
+        }
+    }
+
+    toggleDrawer = () => {
         this.setState(state => ({
-            open: hideMobile ? !state.open : state.open,
-            mobileOpen: hideMobile ? state.mobileOpen : !state.mobileOpen
+            sidebarOpen: !state.sidebarOpen
         }))
     }
 
-    handleDrawerMobileClose = () => {
-        this.setState({
-            mobileOpen: false
-        })
+    toggleDrawerMobile = () => {
+        this.setState(state => ({
+            sidebarMobileOpen: !state.sidebarMobileOpen
+        }))
     }
 
     render() {
-        const { mobileOpen, open } = this.state
-        const { classes, children, location } = this.props
-        const currentPage = location.pathname.split('/')[1] || 'home'
+        const { sidebarMobileOpen, sidebarOpen } = this.state
+        const { classes, children, pageId } = this.props
         return (
             <div className={classes.root}>
                 <AppBar
@@ -99,7 +104,7 @@ class MainLayout extends Component {
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
-                            onClick={this.handleDrawerToggle}
+                            onClick={this.onClickToolbarButton}
                             className={classes.menuButton}
                         >
                             <MenuIcon />
@@ -121,13 +126,17 @@ class MainLayout extends Component {
                     </Toolbar>
                 </AppBar>
                 <Hidden smDown implementation="css">
-                    <SidebarDrawer open={open}>
-                        <SideBar active={currentPage} onClickItem={this.onClickSidebarItem} />
+                    <SidebarDrawer open={sidebarOpen}>
+                        <SideBar activePage={pageId} onClickItem={this.onClickSidebarItem} />
                     </SidebarDrawer>
                 </Hidden>
                 <Hidden mdUp>
-                    <SidebarDrawer open={mobileOpen} mobile onClose={this.handleDrawerMobileClose}>
-                        <SideBar active={currentPage} onClickItem={this.onClickSidebarItem} />
+                    <SidebarDrawer
+                        open={sidebarMobileOpen}
+                        onClose={this.toggleDrawerMobile}
+                        mobile
+                    >
+                        <SideBar activePage={pageId} onClickItem={this.onClickSidebarItem} />
                     </SidebarDrawer>
                 </Hidden>
                 <main className={classes.content}>
@@ -142,10 +151,12 @@ class MainLayout extends Component {
 MainLayout.propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
+    pageId: PropTypes.string
 }
 
-export default withRouter(
-    withStyles(styles, { withTheme: true })(MainLayout)
-)
+MainLayout.defaultProps = {
+    pageId: 'home'
+}
+
+export default withStyles(styles, { withTheme: true })(MainLayout)

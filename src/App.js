@@ -8,9 +8,9 @@ import MuiTheme from './styles/MuiTheme'
 
 import { getAll, update } from './services/BooksAPI'
 
-import MainLayout from "./components/MainLayout"
-import HomePage from "./components/HomePage"
-import SearchPage from "./components/SearchPage"
+import MainLayout from './components/MainLayout'
+import HomePage from './components/HomePage'
+import SearchPage from './components/SearchPage'
 
 
 class App extends Component {
@@ -23,7 +23,8 @@ class App extends Component {
      * On app mount request the books to API then map it
      */
     componentWillMount() {
-        getAll().then(this.mapBooksFromApi)
+        getAll()
+            .then(this.mapBooksFromApi)
     }
 
     /**
@@ -48,7 +49,8 @@ class App extends Component {
             })
 
         }
-        update(book, shelf).then(this.syncShelvesWithApi)
+        update(book, shelf)
+            .then(this.syncShelvesWithApi)
     }
 
     /**
@@ -97,28 +99,40 @@ class App extends Component {
             <MuiThemeProvider theme={MuiTheme}>
                 <CssBaseline />
                 <Router>
-                    <MainLayout>
-                        <Switch>
-                            <Route
-                                path="/search"
-                                render={() => (
-                                    <SearchPage
-                                        books={books}
-                                        onBookChangeShelf={this.onBookChangeShelf}
-                                    />
-                                )}
-                            />
-                            <Route
-                                path="/"
-                                render={() => (
-                                    <HomePage
-                                        books={books}
-                                        onBookChangeShelf={this.onBookChangeShelf}
-                                    />
-                                )}
-                            />
-                        </Switch>
-                    </MainLayout>
+                    <Route
+                        path="/:pageId?"
+                        render={(routeProps) => {
+                            const { match: { params } } = routeProps
+                            const { pageId } = params
+                            return (
+                                <MainLayout pageId={pageId}>
+                                    <Switch>
+                                        <Route
+                                            path="/search"
+                                            render={() => (
+                                                <SearchPage
+                                                    books={books}
+                                                    onBookChangeShelf={this.onBookChangeShelf}
+                                                />
+                                            )}
+                                        />
+                                        <Route
+                                            path="/"
+                                            render={() => {
+                                                return (
+                                                    <HomePage
+                                                        books={books}
+                                                        onBookChangeShelf={this.onBookChangeShelf}
+                                                        shelfFilter={pageId}
+                                                    />
+                                                )
+                                            }}
+                                        />
+                                    </Switch>
+                                </MainLayout>
+                            )
+                        }}
+                    />
                 </Router>
             </MuiThemeProvider>
         )
