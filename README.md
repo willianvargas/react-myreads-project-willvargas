@@ -7,6 +7,7 @@
  - [Project Details](#project-details)
  - [Special Features](#special-features)
  - [Installing and Running](#installing-and-running)
+ - [Running Tests](#running-tests)
  - [Backend Server](#backend-server)
  
 
@@ -25,19 +26,30 @@ This project was bootstrapped with Create React App.
 * Sidebar Menu (mobile too)
 * Dedicated page for every category (*current reading*, *want to read* and *read*)
 * Loading state component
+* Unit and integration testing
 
 ## Installing and Running
 
-* Install all project dependencies with `npm install`
-* Start the development server with `npm start`
+* Install all project dependencies with `yarn install`
+* Start the development server with `yarn start`
 
 runs on localhost:3000
+
+## Running Tests
+
+This project uses [Jest](https://facebook.github.io/jest/) (pre-configurated by Create React App) and
+[Enzyme](http://airbnb.io/enzyme/) that improves the testing techniques for React applications.
+
+* Run all tests `yarn test`
+* Run all tests with coverage reporting `yarn test-coverage`
+
 
 ## Backend Server
 
 The backend server is provided by Udacity's API, so you need internet connection to run the project, even locally.
 
 ### Important
+
 The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can 
 be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend,
 so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
