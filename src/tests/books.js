@@ -1,4 +1,4 @@
-const books = [
+export const booksList = [
     {
         "title": "Needful Things",
         "authors": [
@@ -26,4 +26,15 @@ const books = [
     },
 ]
 
-export default books
+export const getBooksObject = () => {
+    let { booksObject } = {}
+    booksList.forEach(book => {
+        booksObject = {
+            ...booksObject,
+            [book.id]: book
+        }
+    })
+    return booksObject
+}
+
+export default { booksList, getBooksObject }

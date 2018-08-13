@@ -7,9 +7,11 @@ import SearchButton from '.'
 describe('Search button component', () => {
 
     it('render without errors', () => {
-        const element = render(<SearchButton />)
+        const component = render(
+            <SearchButton />
+        )
 
-        expect(element).toMatchSnapshot()
+        expect(component).toMatchSnapshot()
     })
 
 })

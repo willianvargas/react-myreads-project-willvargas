@@ -9,20 +9,21 @@ describe('Sidebar menu item component', () => {
 
     it('render without errors', () => {
         const onClick = () => {}
-        const text = 'Lorem ipsum'
+        const text = 'Foo bar'
         const link = 'test'
-        const element = render(
+
+        const component = render(
             <Router>
                 <MenuItem onClick={onClick} text={text} link={link} />
             </Router>
         )
 
-        expect(element).toMatchSnapshot()
+        expect(component).toMatchSnapshot()
     })
 
     it('trigger onClick function', () => {
         const onClick = jest.fn()
-        const text = 'Lorem ipsum'
+        const text = 'Foo bar'
         const link = 'test'
 
         const wrapper = mount(

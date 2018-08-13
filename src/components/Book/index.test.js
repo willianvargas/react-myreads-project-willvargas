@@ -4,55 +4,57 @@ import { mount, render } from 'enzyme'
 import Book from '.'
 import BookMenu from '../BookMenu'
 
-import books from '../../tests/books'
+import { booksList } from '../../tests/books'
 
 
 describe('Book component', () => {
 
     it('render without errors', () => {
         const onBookChangeShelf = () => {}
-        const book = books[0]
+        const book = booksList[0]
 
-        const element = render(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
+        const component = render(
+            <Book book={book} onBookChangeShelf={onBookChangeShelf} />
+        )
 
-        expect(element)
-            .toMatchSnapshot()
+        expect(component).toMatchSnapshot()
     })
 
 
     it('render without cover image', () => {
         const onBookChangeShelf = () => {}
         const imageLinks = null
-        const book = {
-            ...books[0],
-            imageLinks
-        }
+        const book = { ...booksList[0], imageLinks }
 
-        render(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
+        const component = render(
+            <Book book={book} onBookChangeShelf={onBookChangeShelf} />
+        )
+
+        expect(component).toMatchSnapshot()
     })
 
 
     it('render without authors', () => {
         const onBookChangeShelf = () => {}
         const authors = null
-        const book = {
-            ...books[0],
-            authors
-        }
+        const book = { ...booksList[0], authors }
 
-        render(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
+        const component = render(
+            <Book book={book} onBookChangeShelf={onBookChangeShelf} />
+        )
+
+        expect(component).toMatchSnapshot()
     })
 
 
     it('trigger onBookChangeShelf function', () => {
         const onBookChangeShelf = jest.fn()
         const shelf = 'none'
-        const book = {
-            ...books[0],
-            shelf
-        }
+        const book = { ...booksList[0], shelf }
 
-        const wrapper = mount(<Book book={book} onBookChangeShelf={onBookChangeShelf} />)
+        const wrapper = mount(
+            <Book book={book} onBookChangeShelf={onBookChangeShelf} />
+        )
 
         const menu = wrapper.find(BookMenu)
 

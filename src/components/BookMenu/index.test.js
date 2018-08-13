@@ -10,9 +10,11 @@ describe('Book menu component', () => {
         const onChangeShelf = () => {}
         const shelf = 'read'
 
-        const element = render(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
+        const component = render(
+            <BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />
+        )
 
-        expect(element).toMatchSnapshot()
+        expect(component).toMatchSnapshot()
     })
 
 
@@ -20,7 +22,11 @@ describe('Book menu component', () => {
         const onChangeShelf = () => {}
         const shelf = undefined
 
-        render(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
+        const component = render(
+            <BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />
+        )
+
+        expect(component).toMatchSnapshot()
     })
 
 
@@ -28,14 +34,15 @@ describe('Book menu component', () => {
         const onChangeShelf = () => {}
         const shelf = "read"
 
-        const wrapper = mount(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
+        const wrapper = mount(
+            <BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />
+        )
 
         wrapper.find('button').simulate('click')
 
         const selected = document.querySelectorAll('[data-selected="true"]')[0]
 
-        expect(selected.innerHTML.toLowerCase())
-            .toEqual(expect.stringContaining(shelf))
+        expect(selected.innerHTML.toLowerCase()).toEqual(expect.stringContaining(shelf))
 
         wrapper.unmount()
     })
@@ -45,7 +52,9 @@ describe('Book menu component', () => {
         const onChangeShelf = jest.fn()
         const shelf = "none"
 
-        const wrapper = mount(<BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />)
+        const wrapper = mount(
+            <BookMenu onChangeShelf={onChangeShelf} shelf={shelf} />
+        )
 
         wrapper.find('button').simulate('click')
 

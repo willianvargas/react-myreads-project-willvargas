@@ -7,15 +7,19 @@ import LoadingState from '.'
 describe('Loading State component', () => {
 
     it('render without errors', () => {
-        const element = render(<LoadingState />)
+        const component = render(
+            <LoadingState />
+        )
 
-        expect(element).toMatchSnapshot()
+        expect(component).toMatchSnapshot()
     })
 
     it('render with inline style', () => {
-        const element = render(<LoadingState inline />)
+        const component = render(
+            <LoadingState inline />
+        )
 
-        expect(element).toMatchSnapshot()
+        expect(component).toMatchSnapshot()
     })
 
 })

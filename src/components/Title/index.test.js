@@ -8,7 +8,8 @@ import Title from '.'
 describe('Title component', () => {
 
     it('render the text', () => {
-        const text = 'Lorem ipsum'
+        const text = 'Foo bar'
+
         const wrapper = mount(
             <Title>
                 {text}
@@ -22,14 +23,15 @@ describe('Title component', () => {
 
     it('render with icon', () => {
         const icon = <Home id="icon" />
-        const text = 'Lorem ipsum'
+        const text = 'Foo bar'
+
         const wrapper = mount(
             <Title icon={icon}>
                 {text}
             </Title>
         )
 
-        expect(wrapper.find('#icon').get(0)).not.toBeUndefined()
+        expect(wrapper.find('#icon').get(0)).toBeDefined()
 
         wrapper.unmount()
     })
