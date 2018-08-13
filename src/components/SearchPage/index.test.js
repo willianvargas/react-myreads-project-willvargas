@@ -35,24 +35,32 @@ describe('Search page component', () => {
         wrapper.unmount()
     })
 
-    jest.useFakeTimers()
-
     it('update loading state on search', () => {
         const onBookChangeShelf = () => {}
         const books = getBooksObject()
         const search = 'test'
 
-        const wrapper = mount(
+        const wrapper = shallow(
             <SearchPage onBookChangeShelf={onBookChangeShelf} books={books} />
         )
 
         wrapper.instance().search(search)
 
-        jest.runAllTimers()
-
         expect(wrapper.state('loading')).toEqual(true)
+    })
 
-        wrapper.unmount()
+    it('not update loading state with empty search', () => {
+        const onBookChangeShelf = () => {}
+        const books = getBooksObject()
+        const search = ''
+
+        const wrapper = shallow(
+            <SearchPage onBookChangeShelf={onBookChangeShelf} books={books} />
+        )
+
+        wrapper.instance().search(search)
+
+        expect(wrapper.state('loading')).toEqual(false)
     })
 
     it('update state on change search', () => {
@@ -191,5 +199,7 @@ describe('Search page component', () => {
 
         expect(wrapper.state('searchResults')).toBeUndefined()
     })
+
+    jest.clearAllTimers()
 
 })
