@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 
 import Typography from '@material-ui/core/Typography'
 
@@ -19,6 +20,10 @@ class SearchPage extends Component {
         loading: false
     }
 
+    componentWillMount() {
+        this.searchDebounced = _.debounce(this.search, 1000)
+    }
+
     componentWillReceiveProps(nextProps) {
         const { searchResults } = this.state
         if (searchResults) {
@@ -33,29 +38,20 @@ class SearchPage extends Component {
     componentWillUpdate(nextProps, nextState) {
         const { search } = this.state
         if (nextState.search !== search && nextState.search.length > 0) {
-            this.search(nextState.search)
+            this.searchDebounced(nextState.search)
         }
     }
 
     onChangeSearch = (value) => {
         const nextState = { search: value }
         if (value.length === 0) {
-            this.clearOnChangeTimeout()
             nextState.searchResults = undefined
         }
         this.setState(nextState)
     }
 
-    clearOnChangeTimeout = () => {
-        try {
-            clearTimeout(this.onChangeTimeout)
-        } catch (e) {
-            // the timer doesn't exits
-        }
-    }
-
-    searchApi = (text) => {
-        search(text)
+    searchApi = (value) => {
+        search(value)
             .then(this.checkResults)
             .then(this.mapResultsWithPropsBooks)
             .then(this.renderResults)
@@ -85,15 +81,14 @@ class SearchPage extends Component {
         })
     }
 
-    search = (text) => {
-        this.clearOnChangeTimeout()
-        this.onChangeTimeout = setTimeout(() => {
+    search = (value) => {
+        if (value.length > 0) {
             this.setState({
                 searchResults: undefined,
                 loading: true
             })
-            this.searchApi(text)
-        }, 1000)
+            this.searchApi(value)
+        }
     }
 
     renderResults = (books) => {
@@ -101,6 +96,10 @@ class SearchPage extends Component {
         if (search.length > 0) {
             this.setState({
                 searchResults: books,
+                loading: false
+            })
+        } else {
+            this.setState({
                 loading: false
             })
         }
